@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @Author tangmf
  * @Date 2021/3/8 8:18 下午
@@ -50,4 +52,14 @@ public class PaymentController {
         return serverPort;
     }
 
+    @GetMapping("/feign/timeout")
+    public String paymentFeignTimeout() {
+        try {
+            // 暂停3秒钟 模拟超时任务
+            TimeUnit.SECONDS.sleep(3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return serverPort;
+    }
 }
