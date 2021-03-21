@@ -6,11 +6,18 @@ eureka:
     register-with-eureka: false #false表示不向eureka注入自己
     fetch-registry: true #是否从EurekaServer抓取已有的注册信息，默认为true,单节点无所谓,集群必须设置为true才能配合ribbon使用负载均衡
     service-url:
-      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/ # eureka集群中
+      defaultZone: http://eureka7001.com:7001/eureka/, http://eureka7002.com:7002/eureka/ # eureka集群中
 
-#设置 feign客户端超向( openfeign默认支持 ribbon)
+# 设置feign客户端超时时间(OpenFeign默认支持ribbon)
 ribbon:
-  #指的是建立连接所用的所向,适チ努状況正常胸パ两端近接所用的
-  Readtimeout: 5000
-  #指的是立连接后从务器读到別资源所用的时向
-  Connecttimeout: 5000
+  # 指的是建立连接所用的时间,适用于网络状态正常的情况下,两端连接所用的时间
+  ReadTimeout: 5000
+  # 指的是建立连接后从服务器读取到可用资源所用的时间
+  ConnectTimeout: 5000
+
+logging:
+  level:
+    com.tate.springcloud.service.PaymentFeignService: debug   #feign日志以什么级别监控哪个接口
+
+
+
