@@ -1,0 +1,14 @@
+server:
+  port: 80
+
+eureka:
+  client:
+    register-with-eureka: false #false表示不向eureka注入自己
+    service-url:
+#      defaultZone: http://eureka7001.com:7001/eureka/, http://eureka7002.com:7002/eureka/ # eureka集群中
+      defaultZone: http://eureka7001.com:7001/eureka/
+feign:
+  hystrix:
+    enabled: true #支持hystrix
+
+

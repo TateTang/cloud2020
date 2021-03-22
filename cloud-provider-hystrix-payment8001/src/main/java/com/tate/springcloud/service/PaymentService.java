@@ -1,5 +1,7 @@
 package com.tate.springcloud.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -22,14 +24,27 @@ public class PaymentService {
     }
 
 
+    //3秒钟返回正常，否则兜底方法
+    @HystrixCommand(fallbackMethod = "paymentInfo_timeOutHandler", commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000")
+    })
     public String paymentInfo_timeOut(Integer id) {
-        int timeNumber = 5;
+        int timeNumber = 3;
         try {
             TimeUnit.SECONDS.sleep(timeNumber);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "线程池：" + Thread.currentThread().getName() + "paymentinfo_Timeout,id:" +
-                id + "\t" + "耗时(秒)" + timeNumber;
+        id + "\t" + "耗时(秒)" + timeNumber +"😊";
+        //int age = 10 / 0;
+        //return "线程池：" + Thread.currentThread().getName() + "paymentinfo_Timeout,id:" +
+        //        id + "\t" + "耗时(秒)" + 0;
+    }
+
+    //兜底方法
+    public String paymentInfo_timeOutHandler(Integer id) {
+        return "线程池：" + Thread.currentThread().getName() + " paymentInfo_timeOutHandler，8001系统繁忙，" +
+                "稍后重试,id:" + id + "\t" + "😭";
     }
 }
