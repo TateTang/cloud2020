@@ -6,16 +6,27 @@ spring:
     name: cloud-gateway
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true # 开启从注册中心动态创建路由的功能，利用微服务的名称进行路由
       routes:
         - id: payment_routh # 路由的id 没有规定，建议配合服务名
-          uri: http://localhost:8001 # 路由的地址
+          uri: lb://cloud-payment-service # 路由的地址
+          #          uri: http://localhost:8001 # 路由的地址
           predicates:
             - Path=/payment/get/** # 断言，路径匹配的进行路由
 
         - id: payment_routh2
-          uri: http://localhost:8001
+          uri: lb://cloud-payment-service # 路由的地址
+          #          uri: http://localhost:8001
           predicates:
             - Path=/payment/lb/**
+            - After=2021-03-30T21:01:17.441+08:00[Asia/Shanghai] #这个时间之后访问有效果
+#            - Cookie=username,tate # cookies访问
+#            - Header=X-Request-Id, \d+ #请求头有X-Request-Id属性并且值为整数的正则表达式
+          filters:
+            - AddRequestHeader=X-Request-Id, 24 #过器工厂会在匹配的请求头加上一对请求头,名称为X-Request-Id值为24
+
 
 eureka:
   instance:
