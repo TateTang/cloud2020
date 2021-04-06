@@ -1,5 +1,5 @@
 server:
-  port: 3355
+  port: 3366
 
 spring:
   application:
@@ -17,6 +17,7 @@ spring:
     port: 5672
     username: guest
     password: guest
+
 #注册到eureka
 eureka:
   client:
