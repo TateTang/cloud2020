@@ -1,0 +1,19 @@
+server:
+  port: 8401
+spring:
+  application:
+    name: cloudalibaba-sentinel-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: 127.0.0.1:8666 # 配置sentinel dashboard地址 监控8401
+        port: 8719 # 默认8719端口，假如被占用，会自动从8719开始依次扫描，直到找到未被占用的端口
+#暴露监控端口
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
