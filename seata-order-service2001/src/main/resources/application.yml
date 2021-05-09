@@ -1,0 +1,59 @@
+server:
+  port: 2001
+spring:
+  application:
+    name: seata-order-service
+  cloud:
+    nacos:
+      discovery: #Nacos注册中心地址
+        server-addr: localhost:8848
+    alibaba:
+      seata:
+        tx-service-group: my_test_tx_group
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver #数据库驱动包
+      url: jdbc:mysql://127.0.0.1:3306/seata_order?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
+      username: root
+      password: root
+feign:
+  hystrix:
+    enabled: false
+
+logging:
+  level:
+    io:
+      seata: info
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+#seata配置，相当于registry.conf
+seata:
+  enabled: true
+  enable-auto-data-source-proxy: true #是否启用数据源bean的自动代理
+  application-id: ${spring.application.name}
+  tx-service-group: my_test_tx_group #自定义事务组名称需要与seata-server中对应 service.vgroupMapping.xxxgroup
+  config:
+    type: nacos # nacos作为配置中心
+    nacos:
+      serverAddr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+      namespace: fb3ae06e-9211-46ec-b4af-2cd36ec57185
+  registry:
+    type: nacos # nacos作为注册中心
+    nacos:
+      application: seata-server
+      serverAddr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      userName: nacos
+      password: nacos
+      namespace: fb3ae06e-9211-46ec-b4af-2cd36ec57185
+      cluster: default
+  service:
+    vgroup-mapping:
+      my_test_tx_group: default
+    disable-global-transaction: false
+  client:
+    rm:
+      report-success-enable: false
