@@ -11,11 +11,13 @@ spring:
       seata:
         tx-service-group: my_test_tx_group #和nacos配置中心的service.vgroupMapping.xx_group对应：事务组名称
   datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver #数据库驱动包
       url: jdbc:mysql://127.0.0.1:3306/seata_account?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
       username: root
       password: root
+
 feign:
   hystrix:
     enabled: false
@@ -30,7 +32,7 @@ mybatis:
 #seata配置
 seata:
   enabled: true
-  enable-auto-data-source-proxy: true
+  enableAutoDataSourceProxy: false #是否启用数据源bean的自动代理，关闭自动代理
   application-id: ${spring.application.name}
   tx-service-group: my_test_tx_group #自定义事务组名称需要与seata-server中对应 service.vgroupMapping.xxxgroup
   config:

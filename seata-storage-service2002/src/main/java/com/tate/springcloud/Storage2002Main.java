@@ -13,7 +13,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @EnableDiscoveryClient
 @EnableFeignClients
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication(scanBasePackages = {"com.tate.springcloud"},
+        exclude = DataSourceAutoConfiguration.class)
 public class Storage2002Main {
     public static void main(String[] args) {
         SpringApplication.run(Storage2002Main.class, args);

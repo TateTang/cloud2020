@@ -9,9 +9,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 /**
  * @Author tangmf
  * @Date 2021/5/6 9:12 下午
- * @Description
+ * @Description 在应用启动类中关闭SpringBoot的DataSource自动装载
  */
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+@SpringBootApplication(scanBasePackages = {"com.tate.springcloud"},
+        exclude = DataSourceAutoConfiguration.class)
 @EnableDiscoveryClient
 @EnableFeignClients
 public class Order2001Main {
