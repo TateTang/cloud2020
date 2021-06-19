@@ -14,7 +14,7 @@ spring:
           uri: lb://cloud-payment-service # 路由的地址
           #          uri: http://localhost:8001 # 路由的地址
           predicates:
-            - Path=/payment/get/** # 断言，路径匹配的进行路由
+            - Path=/payment/get/** # 断言，路径匹配的进行路由，追加在目标uri后面
 
         - id: payment_routh2
           uri: lb://cloud-payment-service # 路由的地址
